@@ -1,5 +1,5 @@
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
                    xsi:schemaLocation="
                     http://www.liquibase.org/xml/ns/dbchangelog
                     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd"
@@ -45,14 +45,15 @@
             <column name="icao"/>
         </createIndex>
 
-        <setTableRemarks tableName="event" schemaName="radar_eventsaver" remarks="Event table" />
+        <setTableRemarks tableName="event" schemaName="radar_eventsaver" remarks="Event table"/>
 
-        <setColumnRemarks schemaName="radar_eventsaver" tableName="event" columnName="timestamp"  remarks="Event time" />
-        <setColumnRemarks schemaName="radar_eventsaver" tableName="event" columnName="icao" remarks="ICAO code" />
-        <setColumnRemarks schemaName="radar_eventsaver" tableName="event" columnName="flight" remarks="Flight code" />
-        <setColumnRemarks schemaName="radar_eventsaver" tableName="event" columnName="latitude" remarks="Latitude" />
-        <setColumnRemarks schemaName="radar_eventsaver" tableName="event" columnName="longitude" remarks="Longitude" />
-        <setColumnRemarks schemaName="radar_eventsaver" tableName="event" columnName="alt_baro" remarks="Barometric Altitude" />
+        <setColumnRemarks schemaName="radar_eventsaver" tableName="event" columnName="timestamp" remarks="Event time"/>
+        <setColumnRemarks schemaName="radar_eventsaver" tableName="event" columnName="icao" remarks="ICAO code"/>
+        <setColumnRemarks schemaName="radar_eventsaver" tableName="event" columnName="flight" remarks="Flight code"/>
+        <setColumnRemarks schemaName="radar_eventsaver" tableName="event" columnName="latitude" remarks="Latitude"/>
+        <setColumnRemarks schemaName="radar_eventsaver" tableName="event" columnName="longitude" remarks="Longitude"/>
+        <setColumnRemarks schemaName="radar_eventsaver" tableName="event" columnName="alt_baro"
+                          remarks="Barometric Altitude"/>
 
     </changeSet>
 </databaseChangeLog>
