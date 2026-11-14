@@ -1,4 +1,4 @@
-package pl.gatomek.flightradar.analyzer.adapter.out.model;
+package pl.gatomek.flightradar.analyzer.adapter.out.event.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -1,10 +1,10 @@
-package pl.gatomek.flightradar.analyzer.adapter.out.repo;
+package pl.gatomek.flightradar.analyzer.adapter.out.event.repo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import pl.gatomek.flightradar.analyzer.adapter.out.model.EventEntity;
+import pl.gatomek.flightradar.analyzer.adapter.out.event.model.EventEntity;
 
 import java.util.List;
 

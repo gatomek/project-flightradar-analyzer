@@ -1,11 +1,11 @@
-package pl.gatomek.flightradar.analyzer.adapter.out.service;
+package pl.gatomek.flightradar.analyzer.adapter.out.event.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.gatomek.flightradar.analyzer.adapter.out.mapper.EventMapper;
-import pl.gatomek.flightradar.analyzer.adapter.out.model.Event;
-import pl.gatomek.flightradar.analyzer.adapter.out.model.EventEntity;
-import pl.gatomek.flightradar.analyzer.adapter.out.repo.EventRepository;
+import pl.gatomek.flightradar.analyzer.adapter.out.event.mapper.EventMapper;
+import pl.gatomek.flightradar.analyzer.adapter.out.event.model.Event;
+import pl.gatomek.flightradar.analyzer.adapter.out.event.model.EventEntity;
+import pl.gatomek.flightradar.analyzer.adapter.out.event.repo.EventRepository;
 import pl.gatomek.flightradar.analyzer.application.port.out.EventServicePort;
 
 import java.util.List;
