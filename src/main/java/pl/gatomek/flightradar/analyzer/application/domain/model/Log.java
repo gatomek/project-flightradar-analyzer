@@ -1,4 +1,4 @@
-package pl.gatomek.flightradar.analyzer.adapter.out.event.model;
+package pl.gatomek.flightradar.analyzer.application.domain.model;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,7 +8,7 @@ import java.time.Instant;
 
 @Setter
 @Getter
-public class Event {
+public class Log {
     private Long id;
     private Instant timestamp;
     private String icao;
