@@ -1,4 +1,4 @@
-package pl.gatomek.flightradar.analyzer.adapter.out.model;
+package pl.gatomek.flightradar.analyzer.adapter.out.event.model;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,6 +1,6 @@
 package pl.gatomek.flightradar.analyzer.application.port.out;
 
-import pl.gatomek.flightradar.analyzer.adapter.out.model.Event;
+import pl.gatomek.flightradar.analyzer.adapter.out.event.model.Event;
 
 import java.util.List;
 
