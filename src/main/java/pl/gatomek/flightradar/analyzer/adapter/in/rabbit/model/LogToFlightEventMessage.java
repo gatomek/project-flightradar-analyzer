@@ -1,4 +1,4 @@
-package pl.gatomek.flightradar.analyzer.adapter.in.message.model;
+package pl.gatomek.flightradar.analyzer.adapter.in.rabbit.model;
 
 public record LogToFlightEventMessage(String icao) {
 

@@ -1,10 +1,10 @@
-package pl.gatomek.flightradar.analyzer.adapter.in.message.listener;
+package pl.gatomek.flightradar.analyzer.adapter.in.rabbit.listener;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-import pl.gatomek.flightradar.analyzer.adapter.in.message.model.LogToFlightEventMessage;
+import pl.gatomek.flightradar.analyzer.adapter.in.rabbit.model.LogToFlightEventMessage;
 import pl.gatomek.flightradar.analyzer.application.port.in.LogToFlightEventUseCase;
 
 @RequiredArgsConstructor
