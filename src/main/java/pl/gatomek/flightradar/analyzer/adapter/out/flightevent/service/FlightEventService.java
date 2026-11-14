@@ -25,13 +25,13 @@ public class FlightEventService implements FlightEventUseCase {
     @Override
     public FlightEvent findLastFlightByIcao(String icao) {
         FlightEventEntity event = repository.findLastFlightByIcao(icao);
-        return FlightEventMapper.INSTANCE.toDomain(event);
+        return event != null ? FlightEventMapper.INSTANCE.toDomain(event) : null;
     }
 
     @Override
     public FlightEvent findLastFlightEventByUuid(UUID uuid) {
         FlightEventEntity event = repository.findLastFlightEventByUuid(uuid);
-        return FlightEventMapper.INSTANCE.toDomain(event);
+        return event != null ? FlightEventMapper.INSTANCE.toDomain(event) : null;
     }
 
     @Override
