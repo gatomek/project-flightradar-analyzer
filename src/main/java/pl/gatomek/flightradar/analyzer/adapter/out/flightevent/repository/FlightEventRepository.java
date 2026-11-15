@@ -5,12 +5,12 @@ import org.springframework.data.jpa.repository.NativeQuery;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import pl.gatomek.flightradar.analyzer.adapter.out.flightevent.entity.FlightEvent;
+import pl.gatomek.flightradar.analyzer.adapter.out.flightevent.entity.FlightEventEntity;
 
 import java.util.UUID;
 
 @Repository
-public interface FlightEventRepository extends JpaRepository<FlightEvent, Long> {
+public interface FlightEventRepository extends JpaRepository<FlightEventEntity, Long> {
 
     // @formatter:off
     @NativeQuery( """
@@ -32,23 +32,23 @@ public interface FlightEventRepository extends JpaRepository<FlightEvent, Long> 
 
     // @formatter:off
     @Query( """
-        select fe from FlightEvent fe
+        select fe from FlightEventEntity fe
         where fe.icao = :icao
         order by fe.id desc
         limit 1
         """
     )
     // @formatter:on
-    FlightEvent findLastFlightByIcao(@Param("icao") String icao);
+    FlightEventEntity findLastFlightByIcao(@Param("icao") String icao);
 
     // @formatter:off
     @Query( """
-        select fe from FlightEvent fe
+        select fe from FlightEventEntity fe
         where fe.uuid = :uuid
         order by fe.id desc
         limit 1
         """
     )
     // @formatter:on
-    FlightEvent findLastFlightEventByUuid(@Param("uuid") UUID evtUuid);
+    FlightEventEntity findLastFlightEventByUuid(@Param("uuid") UUID evtUuid);
 }

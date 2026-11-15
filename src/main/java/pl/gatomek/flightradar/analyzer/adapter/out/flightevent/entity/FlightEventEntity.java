@@ -17,7 +17,7 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table(name = "flightevent", schema = "radar_eventsaver")
-public class FlightEvent {
+public class FlightEventEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "flightevent_seq")
     @SequenceGenerator(name = "flightevent_seq", sequenceName = "flightevent_id_seq", allocationSize = 1, schema = "radar_eventsaver")
