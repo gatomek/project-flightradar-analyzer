@@ -4,9 +4,9 @@ import org.springframework.stereotype.Component;
 import pl.gatomek.flightradar.analyzer.application.port.in.NotificationBufferUseCase;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -14,7 +14,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 @Component
 public class NotificationBufferService implements NotificationBufferUseCase {
 
-    private final Map<String, Boolean> icaoBuffer = new HashMap<>(100);
+    private final Set<String> icaoBuffer = new HashSet<>(1000);
     private final ReadWriteLock lock = new ReentrantReadWriteLock();
     private final Lock writeLock = lock.writeLock();
 
@@ -23,7 +23,7 @@ public class NotificationBufferService implements NotificationBufferUseCase {
         try {
             writeLock.lock();
 
-            icaoBuffer.put(icao, Boolean.TRUE);
+            icaoBuffer.add(icao);
         } finally {
             writeLock.unlock();
         }
@@ -35,16 +35,8 @@ public class NotificationBufferService implements NotificationBufferUseCase {
             writeLock.lock();
 
             List<String> list = new ArrayList<>(icaoBuffer.size());
-            icaoBuffer.forEach((key, value) -> {
-                if (Boolean.TRUE == value) {
-                    list.add(key);
-                }
-            });
-
-            if (!list.isEmpty()) {
-                icaoBuffer.replaceAll((k, v) -> Boolean.FALSE);
-            }
-
+            list.addAll(icaoBuffer);
+            icaoBuffer.clear();
             return list;
         } finally {
             writeLock.unlock();
