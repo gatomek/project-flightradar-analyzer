@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import pl.gatomek.flightradar.analyzer.application.domain.model.CalcFlightSummaryMessage;
 import pl.gatomek.flightradar.analyzer.application.domain.model.FlightEvent;
 import pl.gatomek.flightradar.analyzer.application.domain.model.Log;
-import pl.gatomek.flightradar.analyzer.application.port.out.event.LogUseCase;
+import pl.gatomek.flightradar.analyzer.application.port.out.log.LogUseCase;
 import pl.gatomek.flightradar.analyzer.application.port.out.flightevent.FlightEventUseCase;
 
 import java.time.Duration;

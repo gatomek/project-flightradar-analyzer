@@ -2,13 +2,12 @@ package pl.gatomek.flightradar.analyzer.application.domain.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import pl.gatomek.flightradar.analyzer.adapter.out.flightevent.service.FlightEventService;
 import pl.gatomek.flightradar.analyzer.adapter.out.flightsummary.model.FlightSummaryEntity;
-import pl.gatomek.flightradar.analyzer.adapter.out.flightsummary.repo.FlightSummaryRepository;
-import pl.gatomek.flightradar.analyzer.adapter.out.log.service.LogService;
 import pl.gatomek.flightradar.analyzer.application.domain.model.FlightEvent;
 import pl.gatomek.flightradar.analyzer.application.domain.model.Log;
-import pl.gatomek.flightradar.analyzer.application.port.out.flightsummary.FlightSummaryUseCase;
+import pl.gatomek.flightradar.analyzer.application.port.out.flightevent.FlightEventUseCase;
+import pl.gatomek.flightradar.analyzer.application.port.out.flightsummary.SaveFlightSummaryUseCase;
+import pl.gatomek.flightradar.analyzer.application.port.out.log.LogUseCase;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -17,15 +16,14 @@ import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
-public class FlightSummaryService implements FlightSummaryUseCase {
+public class FlightSummaryService {
 
-    private final FlightEventService flightEventService;
-    private final LogService logService;
-    private final FlightSummaryRepository flightSummaryRepository;
+    private final FlightEventUseCase flightEventUseCase;
+    private final LogUseCase logUseCase;
+    private final SaveFlightSummaryUseCase saveFlightSummaryUseCase;
 
-    @Override
     public void calc(UUID uuid) {
-        FlightEvent flightEvent = flightEventService.findLastFlightEventByUuid(uuid);
+        FlightEvent flightEvent = flightEventUseCase.findLastFlightEventByUuid(uuid);
         String icao = flightEvent.getIcao();
         Long beginLogId = flightEvent.getStartLogId();
         Long endLogId = flightEvent.getEndLogId();
@@ -33,9 +31,9 @@ public class FlightSummaryService implements FlightSummaryUseCase {
         List<Log> logs;
 
         if (endLogId != null) {
-            logs = logService.getLogsForIcao(icao, beginLogId, endLogId);
+            logs = logUseCase.getLogsForIcao(icao, beginLogId, endLogId);
         } else {
-            logs = logService.getLogsForIcao(icao, beginLogId);
+            logs = logUseCase.getLogsForIcao(icao, beginLogId);
         }
 
         Instant firstTimestamp = logs.getFirst().getTimestamp();
@@ -51,6 +49,6 @@ public class FlightSummaryService implements FlightSummaryUseCase {
         summary.setLogSize(logs.size());
         summary.setDuration(duration);
 
-        flightSummaryRepository.save(summary);
+        saveFlightSummaryUseCase.save(summary);
     }
 }

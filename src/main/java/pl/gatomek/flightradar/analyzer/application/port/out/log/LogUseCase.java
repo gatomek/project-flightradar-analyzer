@@ -1,4 +1,4 @@
-package pl.gatomek.flightradar.analyzer.application.port.out.event;
+package pl.gatomek.flightradar.analyzer.application.port.out.log;
 
 import pl.gatomek.flightradar.analyzer.application.domain.model.Log;
 

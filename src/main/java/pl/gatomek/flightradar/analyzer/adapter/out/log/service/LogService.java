@@ -6,7 +6,7 @@ import pl.gatomek.flightradar.analyzer.adapter.out.log.mapper.LogMapper;
 import pl.gatomek.flightradar.analyzer.adapter.out.log.model.LogEntity;
 import pl.gatomek.flightradar.analyzer.adapter.out.log.repo.LogRepository;
 import pl.gatomek.flightradar.analyzer.application.domain.model.Log;
-import pl.gatomek.flightradar.analyzer.application.port.out.event.LogUseCase;
+import pl.gatomek.flightradar.analyzer.application.port.out.log.LogUseCase;
 
 import java.util.List;
 import java.util.Optional;
