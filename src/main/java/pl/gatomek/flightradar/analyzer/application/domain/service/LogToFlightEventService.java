@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.gatomek.flightradar.analyzer.application.domain.model.FlightEvent;
 import pl.gatomek.flightradar.analyzer.application.domain.model.Log;
-import pl.gatomek.flightradar.analyzer.application.port.in.LogToFlightEventUseCase;
 import pl.gatomek.flightradar.analyzer.application.port.out.event.LogUseCase;
 import pl.gatomek.flightradar.analyzer.application.port.out.flightevent.FlightEventUseCase;
 
@@ -18,12 +17,11 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
-class LogToFlightEventService implements LogToFlightEventUseCase {
+public class LogToFlightEventService {
 
     private final LogUseCase logService;
     private final FlightEventUseCase flightEventService;
 
-    @Override
     public void processLog(String icao) {
         FlightEvent currFlight = flightEventService.findLastFlightByIcao(icao);
         List<Log> logs;
