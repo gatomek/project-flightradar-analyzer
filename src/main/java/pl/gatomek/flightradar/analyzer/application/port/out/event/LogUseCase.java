@@ -9,4 +9,6 @@ public interface LogUseCase {
     List<Log> getLogsByIcao(String icao);
     Optional<Log> findById(Long id);
     List<Log> getAllLogsForIcaoAfterLogId(String icao, Long startLogId);
+    List<Log> getLogsForIcao(String icao, Long beginLogId);
+    List<Log> getLogsForIcao(String icao, Long beginLogId, Long endLogId);
 }

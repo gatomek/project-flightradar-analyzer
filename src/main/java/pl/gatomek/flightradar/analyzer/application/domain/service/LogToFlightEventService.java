@@ -1,7 +1,9 @@
 package pl.gatomek.flightradar.analyzer.application.domain.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
+import pl.gatomek.flightradar.analyzer.application.domain.model.CalcFlightSummaryMessage;
 import pl.gatomek.flightradar.analyzer.application.domain.model.FlightEvent;
 import pl.gatomek.flightradar.analyzer.application.domain.model.Log;
 import pl.gatomek.flightradar.analyzer.application.port.out.event.LogUseCase;
@@ -21,6 +23,7 @@ public class LogToFlightEventService {
 
     private final LogUseCase logService;
     private final FlightEventUseCase flightEventService;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     public void processLog(String icao) {
         FlightEvent currFlight = flightEventService.findLastFlightByIcao(icao);
@@ -63,6 +66,8 @@ public class LogToFlightEventService {
         }
 
         flightEventService.saveAll(flightEvts);
+
+        uuids.forEach(uuid -> applicationEventPublisher.publishEvent(CalcFlightSummaryMessage.of(uuid)));
     }
 
     private FlightEvent createBeginFlightEvent(Log log) {

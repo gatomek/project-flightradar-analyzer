@@ -1,0 +1,44 @@
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="
+                    http://www.liquibase.org/xml/ns/dbchangelog
+                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd"
+>
+    <changeSet id="20261115_1200_flight_summary" author="gatomek">
+        <createTable schemaName="radar_eventsaver" tableName="flightsummary">
+            <column name="uuid" type="uuid">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="icao" type="varchar2(16)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="startlogid" type="bigint">
+                <constraints nullable="true"
+                             foreignKeyName="fk_flightsummary_startlogid"
+                             references="radar_eventsaver.event(id)"/>
+            </column>
+            <column name="endlogid" type="bigint">
+                <constraints nullable="true"
+                             foreignKeyName="fk_flighsummary_endlogid"
+                             references="radar_eventsaver.event(id)"/>
+            </column>
+            <column name="comment" type="varchar2(100)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="logsize" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duration" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="timestamp" type="timestamp">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <createIndex tableName="flightsummary" indexName="flightsummary_uuid_idx" schemaName="radar_eventsaver">
+            <column name="uuid"/>
+        </createIndex>
+
+    </changeSet>
+</databaseChangeLog>
