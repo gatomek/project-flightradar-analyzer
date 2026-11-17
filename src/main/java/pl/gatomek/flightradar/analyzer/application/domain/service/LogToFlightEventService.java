@@ -22,24 +22,24 @@ import java.util.UUID;
 @Service
 public class LogToFlightEventService {
 
-    private final LogUseCase logService;
-    private final FlightEventUseCase flightEventService;
+    private final LogUseCase logUseCase;
+    private final FlightEventUseCase flightEventUseCase;
     private final ApplicationEventPublisher applicationEventPublisher;
     private final BusCoordinator busCoordinator;
 
     public void processLog(String icao) {
-        FlightEvent currFlight = flightEventService.findLastFlightByIcao(icao);
+        FlightEvent currFlight = flightEventUseCase.findLastFlightByIcao(icao);
         List<Log> logs;
         Log lastLog = null;
         Set<UUID> uuids = new HashSet<>();
 
         if (currFlight != null) {
             Long startLogId = currFlight.getStartLogId();
-            lastLog = logService.findById(startLogId).orElseThrow(RuntimeException::new);
-            logs = logService.getAllLogsForIcaoAfterLogId(icao, startLogId);
+            lastLog = logUseCase.findById(startLogId).orElseThrow(RuntimeException::new);
+            logs = logUseCase.getAllLogsForIcaoAfterLogId(icao, startLogId);
             uuids.add(currFlight.getUuid());
         } else {
-            logs = logService.getLogsByIcao(icao);
+            logs = logUseCase.getLogsByIcao(icao);
         }
 
 
@@ -67,7 +67,7 @@ public class LogToFlightEventService {
             lastLog = log;
         }
 
-        flightEventService.saveAll(flightEvts);
+        flightEventUseCase.saveAll(flightEvts);
 
         busCoordinator.addToFlightCounter(uuids.size());
         uuids.forEach(uuid -> applicationEventPublisher.publishEvent(CalcFlightSummaryMessage.of(uuid)));

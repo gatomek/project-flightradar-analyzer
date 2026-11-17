@@ -1,0 +1,5 @@
+*
+!ansible
+!env
+!target
+!target/radar-analyzer.jar

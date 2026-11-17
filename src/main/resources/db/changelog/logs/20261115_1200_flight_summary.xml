@@ -36,8 +36,8 @@
             </column>
         </createTable>
 
-        <createIndex tableName="flightsummary" indexName="flightsummary_uuid_idx" schemaName="radar_eventsaver">
-            <column name="uuid"/>
+        <createIndex tableName="flightsummary" indexName="flightsummary_icao_idx" schemaName="radar_eventsaver">
+            <column name="icao"/>
         </createIndex>
 
     </changeSet>

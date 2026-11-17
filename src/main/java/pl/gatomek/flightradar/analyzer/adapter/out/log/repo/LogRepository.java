@@ -13,9 +13,9 @@ public interface LogRepository extends JpaRepository<LogEntity, Long> {
 
     // @formatter:off
     @Query( """
-        select al from LogEntity al
-        where al.id < :logId and al.icao = :icao
-        order by al.id desc limit 1
+        select log from LogEntity log
+        where log.id < :logId and log.icao = :icao
+        order by log.id desc limit 1
         """
     )
     // @formatter:on
@@ -23,9 +23,9 @@ public interface LogRepository extends JpaRepository<LogEntity, Long> {
 
     // @formatter:off
     @Query( """
-        select al from LogEntity al
-        where al.icao = :icao
-        order by al.id asc
+        select log from LogEntity log
+        where log.icao = :icao
+        order by log.id asc
         """
     )
     // @formatter:on
@@ -33,9 +33,9 @@ public interface LogRepository extends JpaRepository<LogEntity, Long> {
 
     // @formatter:off
     @Query( """
-        select al from LogEntity al
-        where al.icao = :icao and al.id > :logId
-        order by al.id asc
+        select log from LogEntity log
+        where log.icao = :icao and log.id > :logId
+        order by log.id asc
         """
     )
     // @formatter:on
@@ -43,9 +43,9 @@ public interface LogRepository extends JpaRepository<LogEntity, Long> {
 
     // @formatter:off
     @Query( """
-        select al from LogEntity al
-        where al.icao = :icao and al.id >= :beginLogId
-        order by al.id asc
+        select log from LogEntity log
+        where log.icao = :icao and log.id >= :beginLogId
+        order by log.id asc
         """
     )
     // @formatter:on
@@ -53,9 +53,9 @@ public interface LogRepository extends JpaRepository<LogEntity, Long> {
 
     // @formatter:off
     @Query( """
-        select al from LogEntity al
-        where al.icao = :icao and al.id >= :beginLogId and al.id <= :endLogId
-        order by al.id asc
+        select log from LogEntity log
+        where log.icao = :icao and log.id >= :beginLogId and log.id <= :endLogId
+        order by log.id asc
         """
     )
     // @formatter:on

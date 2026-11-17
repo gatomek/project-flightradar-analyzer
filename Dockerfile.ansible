@@ -1,0 +1,8 @@
+FROM registry.invalid/projects/ansible:latest
+
+COPY ansible /project/ansible
+COPY env /project/env
+COPY target/radar-analyzer.jar /project/target/radar-analyzer.jar
+
+WORKDIR /project/ansible
+ENV ANSIBLE_CONFIG=/project/ansible/ansible.cfg
