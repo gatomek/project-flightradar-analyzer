@@ -1,29 +1,63 @@
 package pl.gatomek.flightradar.analyzer.application.domain.service;
 
-import lombok.RequiredArgsConstructor;
+import io.micrometer.core.instrument.Gauge;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import pl.gatomek.flightradar.analyzer.application.domain.model.BusCoordinator;
 import pl.gatomek.flightradar.analyzer.application.port.in.NotificationProcessorUseCase;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.List;
+import java.util.function.Supplier;
 
-@RequiredArgsConstructor
-@Component
+@Service
 public class NotificationProcessorService implements NotificationProcessorUseCase {
 
     private final NotificationBufferService notificationBufferService;
     private final ApplicationEventPublisher applicationEventPublisher;
     private final BusCoordinator busCoordinator;
+    private Long lastProcessingElapsed = 0L;
+    private Instant lastProcessingInstant;
+
+    public NotificationProcessorService(NotificationBufferService notificationBufferService,
+                                        ApplicationEventPublisher applicationEventPublisher,
+                                        BusCoordinator busCoordinator,
+                                        MeterRegistry meterRegistry) {
+        this.notificationBufferService = notificationBufferService;
+        this.applicationEventPublisher = applicationEventPublisher;
+        this.busCoordinator = busCoordinator;
+
+        Gauge.builder("last_flight_processing_elapsed", getCompanyCount())
+                .description("Last Flight Processing elapsed")
+                .register(meterRegistry);
+    }
+
+    public Supplier<Long> getCompanyCount() {
+        return () -> lastProcessingElapsed;
+    }
 
     public void process() {
-        final int busCounter = busCoordinator.getCounter();
-        if (busCounter > 0) {
+        final int logCounter = busCoordinator.getLogCounter();
+        if (logCounter > 0) {
             return;
         }
 
+        final int flightCounter = busCoordinator.getFlightCounter();
+        if (flightCounter > 0) {
+            return;
+        }
+
+        Instant now = Instant.now();
+        if (lastProcessingInstant != null) {
+            lastProcessingElapsed = Duration.between(lastProcessingInstant, now).toSeconds();
+        }
+
+        lastProcessingInstant = now;
+
         List<String> notifications = notificationBufferService.getNotifications();
-        busCoordinator.setCounter(notifications.size());
+        busCoordinator.setLogCounter(notifications.size());
         notifications.forEach(applicationEventPublisher::publishEvent);
     }
 }

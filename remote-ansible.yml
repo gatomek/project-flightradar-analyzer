@@ -1,0 +1,7 @@
+services:
+  radar-analyzer-setup:
+    container_name: ansible_radar_analyzer_setup
+    build:
+      context: .
+      dockerfile: Dockerfile.ansible
+    command: ansible-playbook -i inventory.ini playbooks/setup-app.yml

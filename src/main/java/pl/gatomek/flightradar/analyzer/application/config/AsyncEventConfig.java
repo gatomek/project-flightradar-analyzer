@@ -13,14 +13,14 @@ public class AsyncEventConfig {
 
     @Bean(name = "applicationEventMulticaster")
     public ApplicationEventMulticaster simpleApplicationEventMulticaster() {
-        SimpleApplicationEventMulticaster eventMulticaster =
-                new SimpleApplicationEventMulticaster();
+        var eventMulticaster = new SimpleApplicationEventMulticaster();
 
-        SimpleAsyncTaskExecutor simpleAsyncTaskExecutor = new SimpleAsyncTaskExecutor();
-        simpleAsyncTaskExecutor.setConcurrencyLimit(20);
-        simpleAsyncTaskExecutor.setVirtualThreads(true);
+        SimpleAsyncTaskExecutor ex = new SimpleAsyncTaskExecutor("event-");
+        ex.setConcurrencyLimit(50);
+        ex.setVirtualThreads(true);
+        ex.setTaskTerminationTimeout(30_000);
 
-        eventMulticaster.setTaskExecutor(simpleAsyncTaskExecutor);
+        eventMulticaster.setTaskExecutor(ex);
         return eventMulticaster;
     }
 }
