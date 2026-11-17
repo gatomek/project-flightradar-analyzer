@@ -69,10 +69,8 @@ public class LogToFlightEventService {
 
         flightEventService.saveAll(flightEvts);
 
-        uuids.forEach(uuid -> {
-            busCoordinator.incrementFlightCounter();
-            applicationEventPublisher.publishEvent(CalcFlightSummaryMessage.of(uuid));
-        });
+        busCoordinator.addToFlightCounter(uuids.size());
+        uuids.forEach(uuid -> applicationEventPublisher.publishEvent(CalcFlightSummaryMessage.of(uuid)));
     }
 
     private FlightEvent createBeginFlightEvent(Log log) {
@@ -95,9 +93,9 @@ public class LogToFlightEventService {
         return e;
     }
 
-    private boolean checkLogFlightNumbers(Log l1, Log l2) {
-        String flight1 = l1.getFlight();
-        String flight2 = l2.getFlight();
+    private boolean checkLogFlightNumbers(Log log, Log lastLog) {
+        String flight1 = log.getFlight();
+        String flight2 = lastLog.getFlight();
 
         if (flight1 != null && flight2 != null) {
             return flight1.equals(flight2);
@@ -106,10 +104,10 @@ public class LogToFlightEventService {
         return false;
     }
 
-    private boolean checkLogTimestamps(Log l1, Log l2) {
-        Instant timestamp1 = l1.getTimestamp();
-        Instant timestamp2 = l2.getTimestamp();
-        Duration duration = Duration.between(timestamp2, timestamp1);
+    private boolean checkLogTimestamps(Log log, Log lastLog) {
+        Instant logTimestamp = log.getTimestamp();
+        Instant lastLogTimestamp = lastLog.getTimestamp();
+        Duration duration = Duration.between(lastLogTimestamp, logTimestamp);
         long minutes = duration.toMinutes();
         return minutes < 15L;
     }
