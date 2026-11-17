@@ -20,7 +20,7 @@ public class IcaoMessageListener {
         try {
             logToFlightEventService.processLog(icao);
         } finally {
-            busCoordinator.decrementCounter();
+            busCoordinator.decrementLogCounter();
         }
     }
 }
